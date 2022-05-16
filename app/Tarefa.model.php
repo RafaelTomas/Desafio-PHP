@@ -2,10 +2,9 @@
 
 class Tarefa{
     private $id;
-    private $nome;
+    private $id_status;
     private $tarefa;
-    private $data_ini;
-    private $data_fim;
+    private $data_cadastro;
 
     public function __get($atributo) {
        return $this->$atributo; 
