@@ -32,7 +32,14 @@ class TarefaService {
 
         $stmt->execute();
     }
-    public function delete(){}
+    public function delete(){
+        $query = 'delete from tb_tarefas where id= :id';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':id', $this->tarefa->__get('id'));
+
+        $stmt->execute();
+    
+    }
 
 }
 
