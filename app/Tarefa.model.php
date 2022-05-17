@@ -1,10 +1,12 @@
 <?php
 
-class Tarefa{
+class Tarefa {
     private $id;
     private $id_status;
+    private $nome;
     private $tarefa;
-    private $data_cadastro;
+    private $data_ini;
+    private $data_fim;
 
     public function __get($atributo) {
        return $this->$atributo; 

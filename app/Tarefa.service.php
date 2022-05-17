@@ -13,22 +13,28 @@ class TarefaService
     }
     public function create()
     {
-        $query = 'insert into tb_tarefas(tarefa)values(:tarefa)';
+        $query = 'insert into tb_tarefas(nome, descricao, data_ini, data_fim)
+        values(:nome, :descricao, :data_ini, :data_fim)';
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(':tarefa', $this->tarefa->__get('tarefa'));
+        $stmt->bindValue(':nome', $this->tarefa->__get('nome'));
+        $stmt->bindValue(':descricao', $this->tarefa->__get('descricao'));
+        $stmt->bindValue(':data_ini', $this->tarefa->__get('data_ini'));
+        $stmt->bindValue(':data_fim', $this->tarefa->__get('data_fim'));
         $stmt->execute();
     }
 
     public function readAll()
     {
-        $query = 'select t.id, s.status, tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id)';
+        $query = 'select t.id, s.status, nome, descricao, data_ini, data_fim 
+        from tb_tarefas as t left join tb_status as s on (t.id_status = s.id)';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
     public function readPending()
     {
-        $query = 'select t.id, s.status, tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id)WHERE t.id_status = 1';
+        $query = 'select t.id, s.status, nome, descricao,  data_ini, data_fim 
+        from tb_tarefas as t left join tb_status as s on (t.id_status = s.id)WHERE t.id_status = 1';
     
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -38,10 +44,13 @@ class TarefaService
 
     public function update()
     {
-        $query = 'update tb_tarefas set tarefa = :tarefa where id= :id';
+        $query = 'update tb_tarefas set nome= :nome, descricao = :descricao, data_ini= :data_ini, data_fim= :data_fim  where id= :id';
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(':tarefa', $this->tarefa->__get('tarefa'));
+        $stmt->bindValue(':descricao', $this->tarefa->__get('descricao'));
         $stmt->bindValue(':id', $this->tarefa->__get('id'));
+        $stmt->bindValue(':nome', $this->tarefa->__get('nome'));
+        $stmt->bindValue(':data_ini', $this->tarefa->__get('data_ini'));
+        $stmt->bindValue(':data_fim', $this->tarefa->__get('data_fim'));
 
         $stmt->execute();
     }

@@ -1,5 +1,5 @@
 <?php
-require "../app/tarefa.model.php";
+require "../app/Tarefa.model.php";
 require "../app/Tarefa.service.php";
 require "../app/Database.php";
 
@@ -8,13 +8,16 @@ $acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 function inserirTarefa()
 {
     $tarefa = new Tarefa();
-    $tarefa->__set('tarefa', $_POST['tarefa']);
+    $tarefa->__set('nome', $_POST['nome'])
+           ->__set('descricao', $_POST['descricao'])
+           ->__set('data_ini', $_POST['data_ini'])
+           ->__set('data_fim', $_POST['data_fim']);
 
     $conn = new Database();
 
     $tarefaService = new TarefaService($conn, $tarefa);
     $tarefaService->create();
-
+    echo 'teste';
     header('Location: nova_tarefa.php?inclusao=1');
 }
 
@@ -41,7 +44,10 @@ function atualizarTarefa()
 {
     $tarefa = new Tarefa();
     $tarefa->__set('id', $_POST['id'])
-        ->__set('tarefa', $_POST['tarefa']);
+           ->__set('nome', $_POST['nome'])
+           ->__set('descricao', $_POST['descricao'])
+           ->__set('data_ini', $_POST['data_ini'])
+           ->__set('data_fim', $_POST['data_fim']);
 
     $conn = new Database();
 
