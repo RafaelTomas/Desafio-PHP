@@ -46,6 +46,11 @@ echo '</prev>';
 	function remover(id) {
 		location.href = `todas_tarefas.php?acao=remover&id=${id}`;
 	}
+
+	function feito(id) {
+		location.href = `todas_tarefas.php?acao=feito&id=${id}`;
+
+	}
 </script>
 
 <html>
@@ -91,9 +96,11 @@ echo '</prev>';
 										<?php echo ($tarefa->tarefa) ?> (<?php echo ($tarefa->status) ?>)
 									</div>
 									<div class="col-sm-3 mt-2 d-flex justify-content-between">
-										<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?php echo($tarefa->id)?>)"></i>
+										<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?php echo ($tarefa->id) ?>)"></i>
+										<?php if($tarefa->status == 'pendente'){?>
 										<i class="fas fa-edit fa-lg text-info" onclick="editar(<?php echo ($tarefa->id) ?>,'<?php echo ($tarefa->tarefa) ?>')"></i>
-										<i class="fas fa-check-square fa-lg text-success"></i>
+										<i class="fas fa-check-square fa-lg text-success" onclick="feito(<?php echo ($tarefa->id) ?>)"></i>
+										<?php } ?>
 									</div>
 								</div>
 							<?php } ?>

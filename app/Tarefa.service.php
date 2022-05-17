@@ -41,5 +41,15 @@ class TarefaService {
     
     }
 
+    public function tarefaPendente()
+    {
+        $query = 'select t.id, s.status, tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where t.id_status = :id_status';
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':id_status', $this->tarefa->__get('id_status'));
+        $stmt->bindValue(':id', $this->tarefa->__get('id'));
+
+        $stmt->execute();
+    }
 }
 

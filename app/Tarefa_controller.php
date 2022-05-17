@@ -53,6 +53,26 @@ if ($acao == 'inserir') {
   if ($red = true) {
     header('Location: todas_tarefas.php');
   }
- 
-   
+    
+  } else if ($acao == 'feito') {
+  $tarefa = new Tarefa();
+  $tarefa->__set('id', $_GET['id'])
+         ->__set('id_status', 2);
+
+  $conn = new Database();
+
+  $tarefaService = new TarefaService($conn, $tarefa);
+  $red = $tarefaService->feito();
+
+  if ($red = true) {
+    header('Location: todas_tarefas.php');
+  }
+  }else if ($acao == 'tarefaPendente') {
+
+  $tarefa = new Tarefa();
+  $tarefa->__set('id_status', 1);
+  $conn = new Database();
+
+  $tarefaService = new TarefaService($conn, $tarefa);
+  $tarefas = $tarefaService->tarefaPendente();
   }
