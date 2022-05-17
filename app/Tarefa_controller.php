@@ -5,74 +5,98 @@ require "../app/Database.php";
 
 $acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 
-if ($acao == 'inserir') {
+function inserirTarefa()
+{
+    $tarefa = new Tarefa();
+    $tarefa->__set('tarefa', $_POST['tarefa']);
 
-  $tarefa = new Tarefa();
-  $tarefa->__set('tarefa', $_POST['tarefa']);
+    $conn = new Database();
 
-  $conn = new Database();
+    $tarefaService = new TarefaService($conn, $tarefa);
+    $tarefaService->create();
 
-  $tarefaService = new TarefaService($conn, $tarefa);
-  $tarefaService->create();
+    header('Location: nova_tarefa.php?inclusao=1');
+}
 
-  header('Location: nova_tarefa.php?inclusao=1');
+function buscarTarefas()
+{
+    $tarefa = new Tarefa();
+    $conn = new Database();
 
-} else if ($acao == 'recuperar') {
+    $tarefaService = new TarefaService($conn, $tarefa);
+    return $tarefaService->readAll();
+}
 
-  $tarefa = new Tarefa();
-  $conn = new Database();
+function buscarTarefasPendentes()
+{
+    $tarefa = new Tarefa();
+    $conn = new Database();
 
-  $tarefaService = new TarefaService($conn, $tarefa);
-  $tarefas = $tarefaService->read();
+    $tarefaService = new TarefaService($conn, $tarefa);
+    return $tarefaService->readPending();
+}
 
-} else if ($acao == 'atualizar') {
 
-  $tarefa = new Tarefa();
-  $tarefa->__set('id', $_POST['id'])
-    ->__set('tarefa', $_POST['tarefa']);
+function atualizarTarefa()
+{
+    $tarefa = new Tarefa();
+    $tarefa->__set('id', $_POST['id'])
+        ->__set('tarefa', $_POST['tarefa']);
 
-  $conn = new Database();
- 
-  $tarefaService = new TarefaService($conn, $tarefa);
-  $red = $tarefaService->update();
+    $conn = new Database();
 
-  if ($red = true) {
-    header('Location: todas_tarefas.php');
-  }
+    $tarefaService = new TarefaService($conn, $tarefa);
 
-  } else if ($acao == 'remover') {
+    $read = $tarefaService->update();
 
-  $tarefa = new Tarefa();
-  $tarefa->__set('id', $_GET['id']);
+    if ($read = true) {
+        header('Location: todas_tarefas.php');
+    }
+}
 
-  $conn = new Database();
+function removerTarefa()
+{
+    $tarefa = new Tarefa();
+    $tarefa->__set('id', $_GET['id']);
 
-  $tarefaService = new TarefaService($conn, $tarefa);
-  $red = $tarefaService->delete();
+    $conn = new Database();
 
-  if ($red = true) {
-    header('Location: todas_tarefas.php');
-  }
-    
-  } else if ($acao == 'feito') {
-  $tarefa = new Tarefa();
-  $tarefa->__set('id', $_GET['id'])
-         ->__set('id_status', 2);
+    $tarefaService = new TarefaService($conn, $tarefa);
+    $red = $tarefaService->delete();
 
-  $conn = new Database();
+    if ($red = true) {
+        header('Location: todas_tarefas.php');
+    }
+}
+function concluirTarefa()
+{
+    $tarefa = new Tarefa();
+    $tarefa->__set('id', $_GET['id']);
+           
+    $conn = new Database();
 
-  $tarefaService = new TarefaService($conn, $tarefa);
-  $red = $tarefaService->feito();
+    $tarefaService = new TarefaService($conn, $tarefa);
+    $tarefaService->updateStatus(2);
+    return buscarTarefas();   
+}
 
-  if ($red = true) {
-    header('Location: todas_tarefas.php');
-  }
-  }else if ($acao == 'tarefaPendente') {
-
-  $tarefa = new Tarefa();
-  $tarefa->__set('id_status', 1);
-  $conn = new Database();
-
-  $tarefaService = new TarefaService($conn, $tarefa);
-  $tarefas = $tarefaService->tarefaPendente();
-  }
+switch ($acao) {
+    case 'inserir':
+        inserirTarefa();
+        break;
+    case 'recuperar':
+        $tarefas = buscarTarefas();
+        break;
+    case 'atualizar':
+        atualizarTarefa();
+        break;
+    case 'remover':
+        removerTarefa();
+        break;
+    case 'feito':
+        $tarefas = concluirTarefa();
+        break;
+    case 'tarefasPendentes':
+        $tarefas= buscarTarefasPendentes();
+        break;    
+}
