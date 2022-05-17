@@ -4,7 +4,7 @@ require './tarefa_controller.php';
 
 ?>
 <script>
-	function editar(id, txt) {
+	function editar(id, _nome, _descricao, _data_ini, _data_fim) {
 
 		let inputId = document.createElement('input')
 		inputId.type = 'hidden'
@@ -17,25 +17,58 @@ require './tarefa_controller.php';
 		form.method = 'post'
 		form.className = 'row'
 
-		let inputTarefa = document.createElement('input')
-		inputTarefa.type = 'text'
-		inputTarefa.name = 'tarefa'
-		inputTarefa.className = 'col-9 form-control'
-		inputTarefa.value = txt
+		let inputNome = document.createElement('input')
+		inputNome.type = 'text'
+		inputNome.name = 'nome'
+		inputNome.className = 'col-9 form-control'
+		inputNome.value = _nome
+
+		let inputDescricao = document.createElement('textarea')
+		inputDescricao.type = 'text'
+		inputDescricao.name = 'descricao'
+		inputDescricao.className = 'col-9 form-control'
+		inputDescricao.value = _descricao
+
+		let inputData_ini = document.createElement('input')
+		inputData_ini.type = 'date'
+		inputData_ini.name = 'data_ini'
+		inputData_ini.className = 'col-9 form-control'
+		inputData_ini.value = _data_ini
+
+		let inputData_fim = document.createElement('input')
+		inputData_fim.type = 'date'
+		inputData_fim.name = 'data_fim'
+		inputData_fim.className = 'col-9 form-control'
+		inputData_fim.value = _data_fim
 
 		let button = document.createElement('button')
 		button.type = 'submit'
 		button.className = 'col-3 btn btn-info'
 		button.innerHTML = 'Atualizar'
 
-		form.appendChild(inputTarefa)
+		form.appendChild(inputNome)
+		form.appendChild(inputDescricao)
+		form.appendChild(inputData_ini)
+		form.appendChild(inputData_fim)
 		form.appendChild(inputId)
 		form.appendChild(button)
 
 
-		let tarefa = document.getElementById('tarefa_' + id)
-		tarefa.innerHTML = ''
-		tarefa.insertBefore(form, tarefa[0])
+		let nome = document.getElementById('nome_' + id)
+		nome.innerHTML = ''
+		nome.insertBefore(form, nome[0])
+
+		let descricao = document.getElementById('descricao_' + id)
+		descricao.innerHTML = ''
+		descricao.insertBefore(form, descricao[0])
+
+		let data_ini = document.getElementById('data_ini_' + id)
+		data_ini.innerHTML = ''
+		data_ini.insertBefore(form, data_ini[0])
+
+		let data_fim = document.getElementById('data_fim_' + id)
+		data_fim.innerHTML = ''
+		data_fim.insertBefore(form, data_fim[0])
 	}
 
 	function remover(id) {
@@ -85,20 +118,31 @@ require './tarefa_controller.php';
 						<div class="col">
 							<h4>Tarefas pendentes</h4>
 							<hr />
-							<?php if(empty($tarefas)) { ?>
-								 <p>Não existem tarefas pendentes</p>
+							<?php if (empty($tarefas)) { ?>
+								<p>Não existem tarefas pendentes</p>
 							<?php } ?>
 							<?php foreach ($tarefas as $indice => $tarefa) { ?>
 								<div class="row mb-3 d-flex align-items-center tarefa">
-									<div class="col-sm-9 " id="tarefa_<?php echo ($tarefa->id) ?>">
-										<?php echo ($tarefa->tarefa) ?>
+									<div class="col-sm-9 " id="nome_<?php echo ($tarefa->id) ?>">
+										<h6>Nome:</h6>
+										<p><?php echo ($tarefa->nome) ?> (<?php echo ($tarefa->status) ?>)</p>
+									</div>
+									<div class="col-sm-9 " id="descricao_<?php echo ($tarefa->id) ?>">
+										<h6>Descrição:</h6>
+										<p><?php echo ($tarefa->descricao) ?></p>
+									</div>
+									<div class="col-sm-9 " id="data_ini_<?php echo ($tarefa->id) ?>">
+										<h6>Data inicial:</h6>
+										<p><?php echo ($tarefa->data_ini) ?></p>
+									</div>
+									<div class="col-sm-9 " id="data_fim_<?php echo ($tarefa->id) ?>">
+										<h6>Data final:</h6>
+										<p><?php echo ($tarefa->data_fim) ?></p>
 									</div>
 									<div class="col-sm-3 mt-2 d-flex justify-content-between">
 										<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?php echo ($tarefa->id) ?>)"></i>
-
-										<i class="fas fa-edit fa-lg text-info" onclick="editar(<?php echo ($tarefa->id) ?>,'<?php echo ($tarefa->tarefa) ?>')"></i>
-										<i class="fas fa-check-square fa-lg text-success" onclick="feito(<?php echo ($tarefa->id) ?>)"></i>
-
+											<i class="fas fa-edit fa-lg text-info" onclick="editar(<?php echo ($tarefa->id) ?>,'<?php echo ($tarefa->nome) ?>','<?php echo ($tarefa->descricao) ?>','<?php echo ($tarefa->data_ini) ?>','<?php echo ($tarefa->data_fim) ?>')"></i>
+											<i class="fas fa-check-square fa-lg text-success" onclick="feito(<?php echo ($tarefa->id) ?>)"></i>
 									</div>
 								</div>
 							<?php } ?>
