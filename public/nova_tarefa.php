@@ -49,7 +49,7 @@
 									<label>Data inicial:</label>
 									<input style="width: 208px;" class="form-control" name="data_ini" type="date" value="2022-03-24">
 									<label>Data final:</label>
-									<input style="width: 208px;" class="form-control" name="data_final" type="date" value="2022-03-24">
+									<input style="width: 208px;" class="form-control" name="data_fim" type="date" value="2022-03-24">
 								</div>
 
 								<button class="btn btn-success">Cadastrar</button>
