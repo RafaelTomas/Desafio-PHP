@@ -1,4 +1,4 @@
-# Agenda Eletrônica
+# 📅Agenda Eletrônica
 
 <!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
@@ -80,9 +80,5 @@ Para usar Agenda, siga estas etapas:
     
   </tr>
 </table>
-
-## 📝 Licença
-
-Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
-
-[⬆ Voltar ao topo](#Agenda_Eletrõnica)<br>
+	
+  <a href="https://www.linkedin.com/in/rafaeltomass/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
